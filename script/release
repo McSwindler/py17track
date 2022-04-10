@@ -36,7 +36,7 @@ git pull origin dev
 new_version=$(generate_version)
 
 # Update the PyPI package version:
-sed -i "" "s/^version = \".*\"/version = \"$new_version\"/g" "$REPO_PATH/pyproject.toml"
+sed -i  "s/^version = \".*\"/version = \"$new_version\"/g" "$REPO_PATH/pyproject.toml"
 git add pyproject.toml
 
 # Commit, tag, and push:

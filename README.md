@@ -5,7 +5,7 @@
 [![Version](https://img.shields.io/pypi/pyversions/seventeentrack.svg)](https://pypi.python.org/pypi/seventeentrack)
 [![License](https://img.shields.io/pypi/l/seventeentrack.svg)](https://github.com/mcswindler/seventeentrack/blob/master/LICENSE)
 [![Code Coverage](https://codecov.io/gh/mcswindler/seventeentrack/branch/master/graph/badge.svg)](https://codecov.io/gh/mcswindler/seventeentrack)
-[![Maintainability](https://api.codeclimate.com/v1/badges/af60d65b69d416136fc9/maintainability)](https://codeclimate.com/github/mcswindler/seventeentrack/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/cd4e8b7fcc8f840009e5/maintainability)](https://codeclimate.com/github/mcswindler/seventeentrack/maintainability)
 
 `seventeentrack` is a simple Python library to track packages in
 [17track.net](http://www.17track.net/) accounts.
