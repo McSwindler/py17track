@@ -10,7 +10,7 @@
 `seventeentrack` is a simple Python library to track packages in
 [17track.net](http://www.17track.net/) accounts.
 
-This project was built off of [seventeentrack](https://github.com/mcswindler/seventeentrack).
+This project was built off of [py17track](https://github.com/bachya/py17track).
 
 ## V1 API
 

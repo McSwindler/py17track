@@ -21,6 +21,8 @@ jobs:
           python-version: 3.7
 
       - name: Publish to PyPI
+        env:
+          PYPI_API_KEY: ${{ secrets.PYPI_API_KEY }}
         run: |
           pip install poetry
-          poetry publish --build -u __token__ -p  ${{ secrets.PYPI_API_KEY }}
+          poetry publish --build -u __token__ -p $PYPI_API_KEY
