@@ -10,6 +10,7 @@ from ..profile import Profile
 _LOGGER: logging.Logger = logging.getLogger(__name__)
 
 V1_API_URL: str = "https://api.17track.net/track/v1"
+V1_USER_URL: str = "https://api.17track.net/account/v1/GetUserConfig"
 
 
 class ProfileV1(Profile):
@@ -19,10 +20,24 @@ class ProfileV1(Profile):
         """Initialize."""
         self._request: Callable[..., Coroutine] = request
         self._api_token: Optional[str] = None
+        self.account_id: Optional[str] = None
 
-    def login(self, api_token: str) -> None:
-        """Set api_token."""
+    async def login(self, api_token: str) -> bool:
+        """Login to the profile."""
         self._api_token = api_token
+        login_resp: dict = await self._request(
+            "post",
+            V1_USER_URL,
+        )
+
+        _LOGGER.debug("Login response: %s", login_resp)
+
+        if login_resp.get("code") != 0:
+            return False
+
+        self.account_id = login_resp["data"]["e"]
+
+        return True
 
     async def packages(
         self,
