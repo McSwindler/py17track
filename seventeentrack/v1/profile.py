@@ -28,6 +28,7 @@ class ProfileV1(Profile):
         login_resp: dict = await self._request(
             "post",
             V1_USER_URL,
+            headers={"17token": self._api_token},
         )
 
         _LOGGER.debug("Login response: %s", login_resp)
