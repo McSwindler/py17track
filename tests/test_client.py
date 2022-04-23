@@ -17,3 +17,18 @@ async def test_bad_request(aresponses):
         async with aiohttp.ClientSession() as session:
             client = Client(session=session)
             await client._request("get", "https://random.domain/no/good")
+
+
+@pytest.mark.asyncio
+async def test_no_explicit_session(aresponses):
+    """Test not providing an explicit aiohttp ClientSession."""
+    aresponses.add(
+        "random.domain",
+        "/good",
+        "get",
+        aresponses.Response(text='{"good":true}', status=200),
+    )
+
+    client = Client()
+    response = await client._request("get", "https://random.domain/good")
+    assert response["good"] is True

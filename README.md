@@ -40,12 +40,12 @@ import asyncio
 
 from aiohttp import ClientSession
 
-from seventeentrack import Client, Version
+from seventeentrack import Client
 
 
 async def main() -> None:
     """Run!"""
-    client = Client(version=Version.V1)
+    client = Client()
 
     # Login with API token:
     client.profile.login("<TOKEN>")

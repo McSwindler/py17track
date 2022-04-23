@@ -3,7 +3,7 @@ import aiohttp
 import pytest
 from pytz import UTC, timezone
 
-from seventeentrack import Client, Version
+from seventeentrack import Client
 from seventeentrack.errors import (
     InvalidTrackingNumberError,
     RequestError,
@@ -27,7 +27,7 @@ async def test_invalid_token(aresponses):
 
     async with aiohttp.ClientSession() as session:
         with pytest.raises(RequestError):
-            client = Client(version=Version.V1, session=session)
+            client = Client(session=session)
             login_result = await client.profile.login(TEST_TOKEN)
             assert login_result is False
 
@@ -45,7 +45,7 @@ async def test_login_error(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         login_result = await client.profile.login(TEST_TOKEN)
         assert login_result is False
 
@@ -61,7 +61,7 @@ async def test_valid_token(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         login_result = await client.profile.login(TEST_TOKEN)
         assert login_result is True
 
@@ -93,10 +93,9 @@ async def test_packages(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         await client.profile.login(TEST_TOKEN)
         packages = await client.profile.packages()
-        print(packages)
         assert len(packages) == 5
         assert packages[0].location == "Paris"
         assert packages[0].carrier == "Fedex"
@@ -134,7 +133,7 @@ async def test_packages_with_unknown_state(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         await client.profile.login(TEST_TOKEN)
         packages = await client.profile.packages()
         assert len(packages) == 3
@@ -170,7 +169,7 @@ async def test_packages_default_timezone(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         await client.profile.login(TEST_TOKEN)
         packages = await client.profile.packages()
         assert len(packages) == 5
@@ -206,7 +205,7 @@ async def test_packages_user_defined_timezone(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         await client.profile.login(TEST_TOKEN)
         packages = await client.profile.packages(tz="Asia/Jakarta")
         assert len(packages) == 5
@@ -234,7 +233,7 @@ async def test_summary(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         await client.profile.login(TEST_TOKEN)
         summary = await client.profile.summary()
         assert summary["Delivered"] == 1
@@ -266,7 +265,7 @@ async def test_add_new_package(aresponses):
     )
 
     async with aiohttp.ClientSession() as session:
-        client = Client(version=Version.V1, session=session)
+        client = Client(session=session)
         await client.profile.login(TEST_TOKEN)
         await client.profile.add_package_with_carrier(
             "LP00432912409987", "FedEx", "Friendly name"
@@ -293,7 +292,7 @@ async def test_set_friendly_name(aresponses):
 
     async with aiohttp.ClientSession() as session:
         with pytest.raises(InvalidTrackingNumberError):
-            client = Client(version=Version.V1, session=session)
+            client = Client(session=session)
             await client.profile.login(TEST_TOKEN)
             await client.profile.set_friendly_name(
                 "1234567890987654321567", "Friendly name"
@@ -320,7 +319,7 @@ async def test_add_existing_package(aresponses):
 
     async with aiohttp.ClientSession() as session:
         with pytest.raises(InvalidTrackingNumberError):
-            client = Client(version=Version.V1, session=session)
+            client = Client(session=session)
             await client.profile.login(TEST_TOKEN)
             await client.profile.add_package("1234567890987654321")
 
@@ -343,7 +342,7 @@ async def test_api_error(aresponses):
 
     async with aiohttp.ClientSession() as session:
         with pytest.raises(RequestError):
-            client = Client(version=Version.V1, session=session)
+            client = Client(session=session)
             await client.profile.login(TEST_TOKEN)
             await client.profile.add_package("1234567890987654321")
 
@@ -360,7 +359,7 @@ async def test_unknown_carrier_name(aresponses):
 
     async with aiohttp.ClientSession() as session:
         with pytest.raises(SeventeenTrackError):
-            client = Client(version=Version.V1, session=session)
+            client = Client(session=session)
             await client.profile.login(TEST_TOKEN)
             await client.profile.add_package_with_carrier(
                 "1234567890987654321", "Foobar"
