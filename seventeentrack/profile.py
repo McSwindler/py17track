@@ -141,6 +141,7 @@ class Profile:
             "post",
             V1_API_URL + "/register",
             json=[json],
+            headers={"17token": self._api_token},
         )
 
         _LOGGER.debug("Add package response: %s", add_resp)
@@ -156,6 +157,7 @@ class Profile:
             "post",
             V1_API_URL + "/changeinfo",
             json={"number": tracking_number, "items": {"tag": friendly_name}},
+            headers={"17token": self._api_token},
         )
 
         _LOGGER.debug("Set friendly name response: %s", add_resp)
